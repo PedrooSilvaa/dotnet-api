@@ -6,10 +6,16 @@ namespace IWantApp.EndPoints.Categories {
 
         public static string Template => "/categories";
         public static string[] Methods => new string[] { HttpMethod.Post.ToString() };
-        public Delegate Handle => Action;
+        public static Delegate Handle => Action;
 
-        public IResult Action(CategoryRequest categoryRequest, ApplicationDbContext context) {
-            return Results.Ok("OK");
+        public static IResult Action(CategoryRequest categoryRequest, ApplicationDbContext context) {
+            var category = new Category {
+                Name = categoryRequest.Name
+            };
+
+            context.Categories.Add(category);
+            context.SaveChanges();
+            return Results.Created($"/categories/{category.Id}", category.Id);
         }
             
      }

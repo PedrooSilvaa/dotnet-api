@@ -1,4 +1,15 @@
+using IWantApp.EndPoints.Categories;
+using IWantApp.Infra.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("IWantDb"),
+        new MySqlServerVersion(new Version(8, 0, 30)) // Altere para a versão do seu MySQL
+    )
+);
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -11,6 +22,8 @@ if (app.Environment.IsDevelopment()) {
 }
 
 app.UseHttpsRedirection();
+
+app.MapMethods(CategoryPost.Template, CategoryPost.Methods, CategoryPost.Handle);    
 
 app.Run();
 
