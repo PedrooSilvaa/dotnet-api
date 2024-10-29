@@ -1,5 +1,9 @@
 ﻿namespace IWantApp.Domain.Products {
     public class Entity {
+
+        public Entity() { 
+            Id = Guid.NewGuid();
+        }
         public Guid Id { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
