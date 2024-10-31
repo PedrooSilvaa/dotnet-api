@@ -36,5 +36,32 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "IWantApp.EndPoints.Categories.CategoryPut",
+    "Method": "Action",
+    "RelativePath": "categories/{id}",
+    "HttpMethod": "PUT",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "categoryRequest",
+        "Type": "IWantApp.EndPoints.Categories.CategoryRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
   }
 ]
