@@ -110,3 +110,4 @@ C:\temp\dotnet-api\src\obj\Debug\net8.0\refint\IWantApp.dll
 C:\temp\dotnet-api\src\obj\Debug\net8.0\IWantApp.pdb
 C:\temp\dotnet-api\src\obj\Debug\net8.0\IWantApp.genruntimeconfig.cache
 C:\temp\dotnet-api\src\obj\Debug\net8.0\ref\IWantApp.dll
+C:\temp\dotnet-api\src\bin\Debug\net8.0\Flunt.dll
