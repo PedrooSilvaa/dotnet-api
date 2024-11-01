@@ -15,12 +15,9 @@ namespace IWantApp.EndPoints.Categories {
                 CreatedOn = DateTime.Now,
                 EditedOn = DateTime.Now
             };
-            if (!category.IsValid) {
-                var errors = category.Notifications
-                    .GroupBy(g => g.Key)
-                    .ToDictionary(g => g.Key, g => g.Select(x => x.Message).ToArray());
-                return Results.ValidationProblem(errors);
-            }
+            if (!category.IsValid) 
+                return Results.ValidationProblem(category.Notifications.ConvertToProblemDetails());
+            
 
             context.Categories.Add(category);
             context.SaveChanges();
