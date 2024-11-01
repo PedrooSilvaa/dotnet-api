@@ -7,9 +7,12 @@ namespace IWantApp.Domain.Products {
         public string Name { get; set; }
         public bool Active { get; set; }
 
-        public Category(string name) {
+        public Category(string name, string createBy, string editedBy) {
             var contract = new Contract<Category>()
-                 .IsNotNullOrEmpty(name, "Name", "Nome é obrigatório");
+                 .IsNotNullOrEmpty(name, "Name", "Name should not be null or empty")
+                 .IsGreaterOrEqualsThan(name, 3, "Name")
+                 .IsNotNullOrEmpty(createBy, "Name", "Name should not be null or empty")
+                 .IsNotNullOrEmpty(editedBy, "Name", "Name should not be null or empty");
             AddNotifications(contract);
 
             Name = name;

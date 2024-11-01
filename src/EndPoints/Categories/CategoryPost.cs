@@ -1,5 +1,6 @@
 ﻿using IWantApp.Domain.Products;
 using IWantApp.Infra.Data;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace IWantApp.EndPoints.Categories {
     public class CategoryPost {
@@ -9,15 +10,17 @@ namespace IWantApp.EndPoints.Categories {
         public static Delegate Handle => Action;
 
         public static IResult Action(CategoryRequest categoryRequest, ApplicationDbContext context) {
-            var category = new Category(categoryRequest.Name)
+            var category = new Category(categoryRequest.Name, "Test", "Test")
             {
-                CreatedBy = "Test",
                 CreatedOn = DateTime.Now,
-                EditedBy = "Test",
                 EditedOn = DateTime.Now
             };
-            if (!category.IsValid)
-                return Results.BadRequest(category.Notifications);
+            if (!category.IsValid) {
+                var errors = category.Notifications
+                    .GroupBy(g => g.Key)
+                    .ToDictionary(g => g.Key, g => g.Select(x => x.Message).ToArray());
+                return Results.ValidationProblem(errors);
+            }
 
             context.Categories.Add(category);
             context.SaveChanges();
