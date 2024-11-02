@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Dapper;
+using Microsoft.AspNetCore.Identity;
+using MySqlConnector;
 using System.Security.Claims;
 
 namespace IWantApp.EndPoints.Employees {
@@ -7,17 +9,25 @@ namespace IWantApp.EndPoints.Employees {
         public static string[] Methods => new string[] { HttpMethod.Get.ToString() };
         public static Delegate Handle => Action;
 
-        public static IResult Action(int page, int rows, UserManager<IdentityUser> userManager) {
+        public static IResult Action(int page, int rows, IConfiguration configuration) {
+            var db = new MySqlConnection("Server=localhost;Database=IWantApp;User=root;Password=root;");
 
-            var users = userManager.Users.Skip((page - 1) * rows).Take(rows).ToList();
-            var employees = new List<EmployeeResponse>();
-            foreach (var user in users) {
-                var claims = userManager.GetClaimsAsync(user).Result;
-                var claimName = claims.FirstOrDefault(c => c.Type == "Name");
-                var userName = claimName != null ? claimName.Value : string.Empty;
-                employees.Add(new EmployeeResponse(user.Email, userName));
-            }
-              return Results.Ok(employees);
+            // Calcule o valor de OFFSET
+            int offset = (page - 1) * rows;
+
+            var query =
+                @"SELECT Email, ClaimValue AS Name
+                FROM AspNetUsers u 
+                INNER JOIN AspNetUserClaims c
+                ON u.id = c.userId AND claimType = 'Name'
+                ORDER BY Name
+                LIMIT @rows OFFSET @offset";
+
+            var employees = db.Query<EmployeeResponse>(
+                query,
+                new { rows, offset } // Passe `offset` calculado aqui
+            );
+            return Results.Ok(employees);
         }
 
     }
