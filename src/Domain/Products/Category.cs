@@ -7,10 +7,10 @@ namespace IWantApp.Domain.Products {
         public string Name { get; private set; }
         public bool Active { get; private set; }
 
-        public Category(string name, string createBy, string editedBy) {
+        public Category(string name, string createdBy, string editedBy) {
             Name = name;
             Active = true;
-            CreatedBy = createBy;
+            CreatedBy = createdBy;
             EditedBy = editedBy;
             CreatedOn = DateTime.Now;
             EditedOn = DateTime.Now;
