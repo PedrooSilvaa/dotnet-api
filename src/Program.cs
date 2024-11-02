@@ -1,5 +1,6 @@
 using IWantApp.EndPoints.Categories;
 using IWantApp.Infra.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         new MySqlServerVersion(new Version(8, 0, 30)) // Altere para a versão do seu MySQL
     )
 );
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
 builder.Services.AddEndpointsApiExplorer();
