@@ -63,5 +63,27 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "IWantApp.EndPoints.Employees.EmployeePost",
+    "Method": "Action",
+    "RelativePath": "employees",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "employeeRequest",
+        "Type": "IWantApp.EndPoints.Employees.EmployeeRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
   }
 ]

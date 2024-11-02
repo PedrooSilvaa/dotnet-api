@@ -1,4 +1,5 @@
 using IWantApp.EndPoints.Categories;
+using IWantApp.EndPoints.Employees;
 using IWantApp.Infra.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         new MySqlServerVersion(new Version(8, 0, 30)) // Altere para a versão do seu MySQL
     )
 );
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => {
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 3;
+})
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
@@ -29,5 +36,7 @@ app.UseHttpsRedirection();
 app.MapMethods(CategoryPost.Template, CategoryPost.Methods, CategoryPost.Handle);    
 app.MapMethods(CategoryGetAll.Template, CategoryGetAll.Methods, CategoryGetAll.Handle);    
 app.MapMethods(CategoryPut.Template, CategoryPut.Methods, CategoryPut.Handle);    
+app.MapMethods(EmployeePost.Template, EmployeePost.Methods, EmployeePost.Handle);
+
 app.Run();
 
