@@ -5,7 +5,7 @@ using MySqlConnector;
 namespace IWantApp.Infra.Data {
     public class QueryAllUsersWithClaimName {
 
-        public IEnumerable<EmployeeResponse> Execute(int page, int rows) {
+        public async Task<IEnumerable<EmployeeResponse>> Execute(int page, int rows) {
             var db = new MySqlConnection("Server=localhost;Database=IWantApp;User=root;Password=root;");
 
             int offset = (page - 1) * rows;
@@ -18,7 +18,7 @@ namespace IWantApp.Infra.Data {
                 ORDER BY Name
                 LIMIT @rows OFFSET @offset";
 
-            return db.Query<EmployeeResponse>(
+            return await db.QueryAsync<EmployeeResponse>(
                 query,
                 new { rows, offset }
             );

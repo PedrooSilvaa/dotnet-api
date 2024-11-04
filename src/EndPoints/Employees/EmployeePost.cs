@@ -11,10 +11,10 @@ namespace IWantApp.EndPoints.Employees {
         public static Delegate Handle => Action;
 
         [Authorize(Policy = "EmployeePolicy")]
-        public static IResult Action(EmployeeRequest employeeRequest, HttpContext http, UserManager<IdentityUser> userManager) {
+        public static async Task<IResult> Action(EmployeeRequest employeeRequest, HttpContext http, UserManager<IdentityUser> userManager) {
             var userId = http.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var newUser = new IdentityUser { UserName = employeeRequest.Email, Email = employeeRequest.Email };
-            var result = userManager.CreateAsync(newUser, employeeRequest.Password).Result;
+            var result = await userManager.CreateAsync(newUser, employeeRequest.Password);
 
             if (!result.Succeeded) {
                 return Results.ValidationProblem(result.Errors.ConvertToProblemDetails());
@@ -27,7 +27,7 @@ namespace IWantApp.EndPoints.Employees {
             };
 
             var claimResult = 
-                userManager.AddClaimsAsync(newUser, userClaims).Result;
+                await userManager.AddClaimsAsync(newUser, userClaims);
 
             if (!claimResult.Succeeded) {
                 return Results.BadRequest(claimResult.Errors.First());
