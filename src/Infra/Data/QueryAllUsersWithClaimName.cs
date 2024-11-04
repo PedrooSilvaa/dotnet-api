@@ -1,8 +1,4 @@
-﻿using Dapper;
-using IWantApp.EndPoints.Employees;
-using MySqlConnector;
-
-namespace IWantApp.Infra.Data {
+﻿namespace IWantApp.Infra.Data {
     public class QueryAllUsersWithClaimName {
 
         public async Task<IEnumerable<EmployeeResponse>> Execute(int page, int rows) {

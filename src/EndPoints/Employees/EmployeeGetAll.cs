@@ -1,11 +1,4 @@
-﻿using Dapper;
-using IWantApp.Infra.Data;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using MySqlConnector;
-using System.Security.Claims;
-
-namespace IWantApp.EndPoints.Employees {
+﻿namespace IWantApp.EndPoints.Employees {
     public class EmployeeGetAll {
         public static string Template => "/employees";
         public static string[] Methods => new string[] { HttpMethod.Get.ToString() };
