@@ -2,7 +2,7 @@
 using System.Security.Claims;
 
 namespace IWantApp.EndPoints.Employees {
-    public class EmployeePost {
+    public class EmployeePost{
 
         public static string Template => "/employees";
         public static string[] Methods => new string[] { HttpMethod.Post.ToString() };

@@ -112,5 +112,27 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "IWantApp.EndPoints.Security.TokenPost",
+    "Method": "Action",
+    "RelativePath": "tokens",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginRequest",
+        "Type": "IWantApp.EndPoints.Security.LoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
   }
 ]
