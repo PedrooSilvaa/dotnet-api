@@ -2,6 +2,8 @@
 using IWantApp.Infra.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace IWantApp.EndPoints.Categories {
     public class CategoryPost {
@@ -11,8 +13,9 @@ namespace IWantApp.EndPoints.Categories {
         public static Delegate Handle => Action;
 
         [Authorize(Policy = "EmployeePolicy")]
-        public static IResult Action(CategoryRequest categoryRequest, ApplicationDbContext context) {
-            var category = new Category(categoryRequest.Name, "Test", "Test")
+        public static IResult Action(CategoryRequest categoryRequest, HttpContext http, ApplicationDbContext context) {
+            var userId = http.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            var category = new Category(categoryRequest.Name, userId, userId)
             {
                 CreatedOn = DateTime.Now,
                 EditedOn = DateTime.Now
